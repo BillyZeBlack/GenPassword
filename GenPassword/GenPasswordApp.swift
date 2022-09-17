@@ -11,7 +11,9 @@ import SwiftUI
 struct GenPasswordApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView{
+                ContentView(service: ContentViewViewModel()).navigationBarTitle(Text("GenP@ssw0rd"))
+            }
         }
     }
 }
