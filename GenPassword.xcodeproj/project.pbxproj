@@ -12,6 +12,7 @@
 		9F3E0D4A28D59AC900DF8083 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3E0D4928D59AC900DF8083 /* Assets.xcassets */; };
 		9F3E0D4D28D59AC900DF8083 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3E0D4C28D59AC900DF8083 /* Preview Assets.xcassets */; };
 		9F3E0D5528D59D8100DF8083 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9F3E0D5428D59D8100DF8083 /* Alamofire */; };
+		9F3E0D5A28D5A8BA00DF8083 /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F3E0D5928D5A8BA00DF8083 /* ParseSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F3E0D5A28D5A8BA00DF8083 /* ParseSwift in Frameworks */,
 				9F3E0D5528D59D8100DF8083 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,6 +89,7 @@
 			name = GenPassword;
 			packageProductDependencies = (
 				9F3E0D5428D59D8100DF8083 /* Alamofire */,
+				9F3E0D5928D5A8BA00DF8083 /* ParseSwift */,
 			);
 			productName = GenPassword;
 			productReference = 9F3E0D4228D59AB800DF8083 /* GenPassword.app */;
@@ -118,6 +121,7 @@
 			mainGroup = 9F3E0D3928D59AB800DF8083;
 			packageReferences = (
 				9F3E0D5328D59D8100DF8083 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9F3E0D5828D5A8BA00DF8083 /* XCRemoteSwiftPackageReference "Parse-Swift" */,
 			);
 			productRefGroup = 9F3E0D4328D59AB800DF8083 /* Products */;
 			projectDirPath = "";
@@ -359,6 +363,14 @@
 				kind = branch;
 			};
 		};
+		9F3E0D5828D5A8BA00DF8083 /* XCRemoteSwiftPackageReference "Parse-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/parse-community/Parse-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -366,6 +378,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9F3E0D5328D59D8100DF8083 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		9F3E0D5928D5A8BA00DF8083 /* ParseSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F3E0D5828D5A8BA00DF8083 /* XCRemoteSwiftPackageReference "Parse-Swift" */;
+			productName = ParseSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
