@@ -14,7 +14,7 @@
 		9F3E0D5528D59D8100DF8083 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9F3E0D5428D59D8100DF8083 /* Alamofire */; };
 		9F3E0D5A28D5A8BA00DF8083 /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F3E0D5928D5A8BA00DF8083 /* ParseSwift */; };
 		9F3E0D5F28D5AAE100DF8083 /* ContentViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3E0D5E28D5AAE100DF8083 /* ContentViewViewModel.swift */; };
-		9FEEE86828D9F2390034A76A /* Meter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEEE86728D9F2390034A76A /* Meter.swift */; };
+		9FEEE86828D9F2390034A76A /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEEE86728D9F2390034A76A /* MeterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +24,7 @@
 		9F3E0D4928D59AC900DF8083 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F3E0D4C28D59AC900DF8083 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9F3E0D5E28D5AAE100DF8083 /* ContentViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewViewModel.swift; sourceTree = "<group>"; };
-		9FEEE86728D9F2390034A76A /* Meter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meter.swift; sourceTree = "<group>"; };
+		9FEEE86728D9F2390034A76A /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				9F3E0D4728D59AB900DF8083 /* ContentView.swift */,
-				9FEEE86728D9F2390034A76A /* Meter.swift */,
+				9FEEE86728D9F2390034A76A /* MeterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,7 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F3E0D4828D59AB900DF8083 /* ContentView.swift in Sources */,
-				9FEEE86828D9F2390034A76A /* Meter.swift in Sources */,
+				9FEEE86828D9F2390034A76A /* MeterView.swift in Sources */,
 				9F3E0D4628D59AB900DF8083 /* GenPasswordApp.swift in Sources */,
 				9F3E0D5F28D5AAE100DF8083 /* ContentViewViewModel.swift in Sources */,
 			);

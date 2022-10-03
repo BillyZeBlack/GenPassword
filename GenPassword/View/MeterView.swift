@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Meter: View {
+struct MeterView: View {
     let colors = [Color("Color"), Color("Color1")]
     @Binding var progress: CGFloat
     
@@ -24,10 +24,11 @@ struct Meter: View {
                     .frame(width: 280, height: 280)
             }
             .rotationEffect(.init(degrees: 180))
+            .animation(Animation.linear(duration: 1.5))
             
             ZStack(alignment: .bottom){
                 self.colors[0]
-                    .frame(width: 2, height: 55)
+                    .frame(width: 2, height: 100)
                 Circle()
                     .fill(self.colors[0])
                     .frame(width: 15, height: 15)
@@ -35,26 +36,33 @@ struct Meter: View {
             .offset(y: -35)
             .rotationEffect(.init(degrees: -90))
             .rotationEffect(.init(degrees: self.setArrow()))
+            .animation(Animation.linear(duration: 1.5))
         }
         .padding(.bottom, -140)
     }
     
     func setProgress()->CGFloat
     {
-        let temp = self.progress / 2
-        
-        return Double(temp * 0.01)
+        if self.progress != 0 {
+            let temp = self.progress / 2
+            
+            return Double(temp * 0.01)
+        }
+        return 0
     }
     
     func setArrow()->Double
     {
-        let temp = self.progress / 100
-        return Double(temp * 180)
+        if 0 != self.progress {
+            let temp = self.progress / 100
+            return Double(temp * 180)
+        }
+        return 0
     }
 }
 
 struct Meter_Previews: PreviewProvider {
     static var previews: some View {
-        Meter(progress: .constant(55))
+        MeterView(progress: .constant(20))
     }
 }

@@ -15,39 +15,39 @@ class ContentViewViewModel: ObservableObject {
     @Published var level: String!
     @Published var progress: CGFloat!
     
-    func genPassword(len: String, hasSpecialChar: Bool, hasNumbers: Bool, hasCaps: Bool, hasLetters: Bool)
+    func genPassword(len: Int, hasSpecialChar: Bool, hasNumbers: Bool, hasCaps: Bool, hasLetters: Bool)
     {
-        var length = 8
+        var passwordElements = ""
+        var passwordGenerated = ""
         
         let letters = "aàbcçdeéèfghijklmnopqrstuùvwxyz"
         let caps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         let specialChars = "!&^%$#@()/"
-        var numbers = "0123456789"
+        let numbers = "0123456789"
         
-        if let size = Int(len) {
-            if size > 8 {
-                length = size
-            }
+        if hasNumbers {
+            passwordElements += numbers
         }
         
         if hasSpecialChar {
-            numbers += specialChars
+            passwordElements += specialChars
         }
         
         if hasLetters {
-            numbers += letters
+            passwordElements += letters
         }
         
         if hasCaps {
-            numbers += caps
+            passwordElements += caps
         }
         
-        data = String((0..<length).map{ _ in numbers.randomElement()! })
-        
-        testPassword(password: data, hasCaps: hasCaps, hasLetter: hasLetters, hasSpecialChar: hasSpecialChar)
+        if 0 < passwordElements.count {
+            passwordGenerated = String((0..<len).map{ _ in passwordElements.randomElement()! })
+            testPassword(password: passwordGenerated, hasCaps: hasCaps, hasLetter: hasLetters, hasSpecialChar: hasSpecialChar, hasNumber: hasNumbers)
+        }
     }
     
-    func testPassword(password: String, hasCaps: Bool, hasLetter: Bool, hasSpecialChar: Bool)
+    func testPassword(password: String, hasCaps: Bool, hasLetter: Bool, hasSpecialChar: Bool, hasNumber: Bool)
     {
         var condition = false
         
@@ -61,33 +61,97 @@ class ContentViewViewModel: ObservableObject {
         
         let numbersRegex = ".*[0-9]+.*"
         let numberTest = NSPredicate(format: "SELF MATCHES %@", numbersRegex)
-        let numberResult = numberTest.evaluate(with: password)
+        let numberResult = numberTest.evaluate(with: password)//password
         
         let specialCharRegex = ".*[!&^%$#@()/]+.*"
         let specialCharTest = NSPredicate(format: "SELF MATCHES %@", specialCharRegex)
         let specialCharResult = specialCharTest.evaluate(with: password)
         
-        if hasCaps && capitalResult {
+        // Maj seules
+        if (hasCaps && capitalResult) && ((!hasNumber && !numberResult) && (!hasLetter && !lowercaseResult) && (!hasSpecialChar && !specialCharResult)) {
             condition = true
         }
         
-        if hasLetter && lowercaseResult {
+        // Maj et minuscule
+        if ((hasCaps && capitalResult) && (hasLetter && lowercaseResult)) && ((!hasNumber && !numberResult) && (!hasSpecialChar && !specialCharResult)) {
             condition = true
         }
         
-        if hasSpecialChar && specialCharResult {
+        //Maj et nombres
+        if ((hasCaps && capitalResult) && (hasNumber && numberResult)) && ((!hasLetter && !lowercaseResult) && (!hasSpecialChar && !specialCharResult)) {
             condition = true
         }
         
-        if condition || (!hasCaps && !hasLetter && !hasSpecialChar){
+        //Maj et caract. spé
+        if ((hasCaps && capitalResult) && (hasSpecialChar && specialCharResult)) && ((!hasLetter && !lowercaseResult) && (!hasNumber && !numberResult)) {
+            condition = true
+        }
+        
+        //Maj && Minu && nombre
+        if ((hasCaps && capitalResult) && (hasLetter && lowercaseResult) && (hasNumber && numberResult)) && (!hasSpecialChar && !specialCharResult) {
+            condition = true
+        }
+        
+        //Maj && minu && caractere spéciaux
+        if (hasCaps && capitalResult && hasLetter && lowercaseResult && hasSpecialChar && specialCharResult) && (!hasNumber && !numberResult) {
+            condition = true
+        }
+
+        //Maj et nombres et caracteres
+        if ((hasCaps && capitalResult) && (hasNumber && numberResult) && (hasSpecialChar && specialCharResult)) && (!hasLetter && !lowercaseResult) {
+            condition = true
+        }
+        
+        //Minus seules
+        if (hasLetter && lowercaseResult) && ((!hasNumber && !numberResult) && (!hasCaps && !capitalResult) && (!hasSpecialChar && !specialCharResult)) {
+            condition = true
+        }
+        
+        //Minus et nombres
+        if ((hasLetter && lowercaseResult) && (hasNumber && numberResult)) && ((!hasCaps && !capitalResult) && (!hasSpecialChar && !specialCharResult)) {
+            condition = true
+        }
+        
+        //Minus et caractere spéciaux
+        if ((hasLetter && lowercaseResult) &&  (hasSpecialChar && specialCharResult)) && ((!hasNumber && !numberResult) && (!hasCaps && !capitalResult)){
+            condition = true
+        }
+        
+        //Minus ; nombre ; cacartere
+        if ((hasLetter && lowercaseResult) && (hasNumber && numberResult) && (hasSpecialChar && specialCharResult)) && ((!hasCaps && !capitalResult)) {
+            condition = true
+        }
+        
+        //Nombres seul
+        if (hasNumber && numberResult) && ((!hasCaps && !capitalResult) && (!hasLetter && !lowercaseResult) && (!hasSpecialChar && !specialCharResult)) {
+            condition = true
+        }
+        
+        //Nombre et caractère spéciaux
+        if ((hasNumber && numberResult) && (hasSpecialChar && specialCharResult) && ((!hasCaps && !capitalResult) && (!hasLetter && !lowercaseResult))) {
+            condition = true
+        }
+        
+        //caractere spéciaux
+        if (hasSpecialChar && specialCharResult) && ((!hasCaps && !capitalResult) && (!hasLetter && !lowercaseResult) && (!hasNumber && !numberResult)) {
+            condition = true
+        }
+        
+        //tous les éléments
+        if hasSpecialChar && specialCharResult && hasCaps && capitalResult && hasLetter && lowercaseResult && hasNumber && numberResult {
+            condition = true
+        }
+        
+        if condition { //|| (!hasCaps && !hasLetter && !hasSpecialChar)
             checkStrenghtPassword(password: password, capitalResult: capitalResult, lowercaseResult: lowercaseResult, specialCharResult: specialCharResult, numberResult: numberResult)
         } else {
-            genPassword(len: password, hasSpecialChar: hasSpecialChar, hasNumbers: true, hasCaps: hasCaps, hasLetters: hasLetter)
+            genPassword(len: password.count, hasSpecialChar: hasSpecialChar, hasNumbers: hasNumber, hasCaps: hasCaps, hasLetters: hasLetter)
         }
     }
     
     func checkStrenghtPassword(password: String, capitalResult: Bool, lowercaseResult: Bool, specialCharResult: Bool, numberResult: Bool)
     {
+        // MARK: Only numbers
         if ((password.count <= 10 && numberResult) && !capitalResult && !lowercaseResult && !specialCharResult) {
             level = "20"
             self.progress = 20.0
@@ -103,54 +167,170 @@ class ContentViewViewModel: ObservableObject {
             self.progress = 60.0
         }
         
-        if (password.count <= 5 && numberResult && capitalResult && lowercaseResult) && !specialCharResult {
-            level = "20"
-            self.progress = 20.0
-        }
-        
-        if (password.count > 5 && password.count <= 8 && numberResult && capitalResult && lowercaseResult) && !specialCharResult {
-            level = "40"
+        //MARK: only lowercase
+        if (password.count >= 8 && 10 >= password.count && lowercaseResult) && (!capitalResult && !numberResult && !specialCharResult) {
             self.progress = 40.0
         }
         
-        if (password.count > 8 && password.count <= 10 && numberResult && capitalResult && lowercaseResult) && !specialCharResult {
-            level = "60"
+        if (password.count > 10 && 13 >= password.count && lowercaseResult) && (!capitalResult && !numberResult && !specialCharResult) {
             self.progress = 60.0
         }
         
-        if (password.count > 10 && password.count <= 13 && numberResult && capitalResult && lowercaseResult) && !specialCharResult {
-            level = "80"
+        if (password.count > 13 && 17 >= password.count && lowercaseResult) && (!capitalResult && !numberResult && !specialCharResult) {
             self.progress = 80.0
         }
         
-        if (password.count > 13 && numberResult && capitalResult && lowercaseResult) && !specialCharResult {
-            level = "100"
-            self.progress = 100.0
+        if (password.count > 17 && lowercaseResult) && (!capitalResult && !numberResult && !specialCharResult) {
+            self.progress = 100
         }
         
-        if password.count <= 5 && numberResult && capitalResult && lowercaseResult && specialCharResult {
-            level = "20"
-            self.progress = 20.0
-        }
-        
-        if (password.count > 5 && password.count <= 8) && numberResult && capitalResult && lowercaseResult && specialCharResult {
-            level = "40"
+        //MARK: Only Uppercase
+        if (password.count >= 8 && 10 >= password.count && capitalResult) && (!lowercaseResult && !numberResult && !specialCharResult) {
             self.progress = 40.0
         }
         
-        if (password.count > 8 && password.count <= 10) && numberResult && capitalResult && lowercaseResult && specialCharResult {
-            level = "60"
+        if (password.count > 10 && 13 >= password.count && capitalResult) && (!lowercaseResult && !numberResult && !specialCharResult) {
             self.progress = 60.0
         }
         
-        if (password.count > 10 && password.count <= 12) && numberResult && capitalResult && lowercaseResult && specialCharResult {
-            level = "80"
+        if (password.count > 13 && 17 >= password.count && capitalResult) && (!lowercaseResult && !numberResult && !specialCharResult) {
             self.progress = 80.0
         }
         
-        if password.count > 12 && numberResult && capitalResult && lowercaseResult && specialCharResult {
-            level = "100"
+        if (password.count > 17 && capitalResult) && (!lowercaseResult && !numberResult && !specialCharResult) {
+            self.progress = 100
+        }
+        
+        //MARK: only Special Charac
+        if (password.count >= 8 && 10 >= password.count && specialCharResult) && (!lowercaseResult && !numberResult && !capitalResult) {
+            self.progress = 40.0
+        }
+        
+        if (password.count > 10 && 13 >= password.count && specialCharResult) && (!lowercaseResult && !numberResult && !capitalResult) {
+            self.progress = 60.0
+        }
+        
+        if (password.count > 13 && 17 >= password.count && specialCharResult) && (!lowercaseResult && !numberResult && !capitalResult) {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 17 && specialCharResult) && (!lowercaseResult && !numberResult && !capitalResult) {
+            self.progress = 100
+        }
+        
+        //MARK: uppercase && lowercase
+        if ((password.count >= 8 && 10 >= password.count) && (capitalResult && lowercaseResult)) && !numberResult && !specialCharResult {
+            self.progress = 40.0
+        }
+        
+        if (password.count > 10 && 13 >= password.count && (capitalResult && lowercaseResult)) && !numberResult && !specialCharResult  {
+            self.progress = 60.0
+        }
+        
+        if (password.count > 13 && 17 >= password.count && (capitalResult && lowercaseResult)) && !numberResult && !specialCharResult  {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 17 && (capitalResult && lowercaseResult)) && !numberResult && !specialCharResult  {
             self.progress = 100.0
         }
+        
+        //MARK: uppercase && lowercase && numbers
+        if (password.count == 8 && capitalResult && lowercaseResult && numberResult) && !specialCharResult {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 8 && capitalResult && lowercaseResult && numberResult) && !specialCharResult {
+            self.progress = 100.0
+        }
+        
+        //MARK: uppercase && lowercase && specialCharacter
+        if (password.count == 8 && capitalResult && lowercaseResult && numberResult) && !specialCharResult {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 8 && capitalResult && lowercaseResult && numberResult) && !specialCharResult {
+            self.progress = 100.0
+        }
+        
+        //MARK: uppercase && numbers
+        if (password.count >= 8 && 10 >= password.count && capitalResult && numberResult) && (!lowercaseResult && !specialCharResult) {
+            self.progress = 60.0
+        }
+        
+        if ((password.count > 10 && 12 >= password.count) && capitalResult && numberResult) && (!lowercaseResult && !specialCharResult) {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 12 && capitalResult && numberResult) && (!lowercaseResult && !specialCharResult) {
+            self.progress = 100
+        }
+        
+        //MARK: uppercase && specialCharact
+        if (password.count >= 8 && 10 >= password.count && capitalResult && specialCharResult) && (!lowercaseResult && !numberResult) {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 10 && capitalResult && specialCharResult) && (!lowercaseResult && !numberResult) {
+            self.progress = 100.0
+        }
+        
+        //MARK: lowercase && numbers
+        if (password.count >= 8 && 13 >= password.count && lowercaseResult && numberResult) &&  (!capitalResult && !specialCharResult) {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 13 &&  !capitalResult && lowercaseResult && numberResult) && (!capitalResult && !specialCharResult) {
+            self.progress = 100.0
+        }
+        
+        //MARK: lowercase && specialchart
+        if (password.count >= 8 && 9 >= password.count && lowercaseResult && specialCharResult) && (!capitalResult && !numberResult) {
+            self.progress = 60
+        }
+        
+        if (password.count > 9 && 11 > password.count && lowercaseResult && specialCharResult) && (!capitalResult && !numberResult) {
+            self.progress = 80
+        }
+        
+        if (password.count > 11 && lowercaseResult && specialCharResult) && (!capitalResult && !numberResult) {
+            self.progress = 100
+        }
+        
+        //MARK: Numbers & special characters
+        if (password.count == 8 && numberResult && specialCharResult) && (!capitalResult && !lowercaseResult) {
+            self.progress = 40.0
+        }
+        
+        if (password.count >= 9 && 11 >= password.count && numberResult && specialCharResult) && (!capitalResult && !lowercaseResult) {
+            self.progress = 60.0
+        }
+        
+        if (password.count > 11 && 14 >= password.count && numberResult && specialCharResult) && (!capitalResult && !lowercaseResult) {
+            self.progress = 80.0
+        }
+        
+        if (password.count > 14 && numberResult && specialCharResult) && (!capitalResult && !lowercaseResult) {
+            self.progress = 100.0
+        }
+
+        //MARK: all possibilties
+        if password.count == 8 && capitalResult && lowercaseResult && numberResult && specialCharResult {
+            self.progress = 40.0
+        }
+        
+        if password.count > 8 && 10 >= password.count && capitalResult && lowercaseResult && numberResult && specialCharResult {
+            self.progress = 60.0
+        }
+        
+        if password.count > 10 && 12 >= password.count && lowercaseResult && numberResult && specialCharResult {
+            self.progress = 80.0
+        }
+        
+        if password.count > 12 && capitalResult && lowercaseResult && numberResult && specialCharResult {
+            self.progress = 100.0
+        }
+        
+        self.data = password
     }
 }
