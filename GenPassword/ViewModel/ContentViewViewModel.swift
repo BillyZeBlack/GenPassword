@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 import UIKit
 
 class ContentViewViewModel: ObservableObject {
@@ -44,6 +43,8 @@ class ContentViewViewModel: ObservableObject {
         if 0 < passwordElements.count {
             passwordGenerated = String((0..<len).map{ _ in passwordElements.randomElement()! })
             testPassword(password: passwordGenerated, hasCaps: hasCaps, hasLetter: hasLetters, hasSpecialChar: hasSpecialChar, hasNumber: hasNumbers)
+        } else {
+            self.progress = 0
         }
     }
     
@@ -276,8 +277,12 @@ class ContentViewViewModel: ObservableObject {
         }
         
         //MARK: lowercase && numbers
-        if (password.count >= 8 && 13 >= password.count && lowercaseResult && numberResult) &&  (!capitalResult && !specialCharResult) {
-            self.progress = 80.0
+        if (password.count == 8 && lowercaseResult && numberResult) &&  (!capitalResult && !specialCharResult) {
+            self.progress = 40.0
+        }
+        
+        if(password.count > 8 && 9 >= password.count && lowercaseResult && numberResult) &&  (!capitalResult && !specialCharResult){
+            self.progress = 80
         }
         
         if (password.count > 13 &&  !capitalResult && lowercaseResult && numberResult) && (!capitalResult && !specialCharResult) {
