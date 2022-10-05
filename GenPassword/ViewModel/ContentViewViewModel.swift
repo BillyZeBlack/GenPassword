@@ -12,7 +12,7 @@ class ContentViewViewModel: ObservableObject {
     
     @Published var data : String!
     @Published var level: String!
-    @Published var progress: CGFloat!
+    @Published var progress: CGFloat! = 0
     
     func genPassword(len: Int, hasSpecialChar: Bool, hasNumbers: Bool, hasCaps: Bool, hasLetters: Bool)
     {
@@ -267,6 +267,15 @@ class ContentViewViewModel: ObservableObject {
             self.progress = 100
         }
         
+        //MARK: uppercase && numbers && specialChar
+        if password.count >= 8 && 9 >= password.count  && capitalResult && numberResult && specialCharResult && !lowercaseResult {
+            self.progress = 80
+        }
+        
+        if password.count > 9 && capitalResult && numberResult && specialCharResult && !lowercaseResult {
+            self.progress = 100.0
+        }
+        
         //MARK: uppercase && specialCharact
         if (password.count >= 8 && 10 >= password.count && capitalResult && specialCharResult) && (!lowercaseResult && !numberResult) {
             self.progress = 80.0
@@ -299,6 +308,19 @@ class ContentViewViewModel: ObservableObject {
         }
         
         if (password.count > 11 && lowercaseResult && specialCharResult) && (!capitalResult && !numberResult) {
+            self.progress = 100
+        }
+        
+        //MARK: lowercase && numbers && specialChar
+        if password.count == 8 && lowercaseResult && numberResult && specialCharResult && !capitalResult {
+            self.progress = 60
+        }
+        
+        if password.count > 8 && 9 >= password.count && lowercaseResult && numberResult && specialCharResult && !capitalResult {
+            self.progress = 80
+        }
+        
+        if password.count > 9 && lowercaseResult && numberResult && specialCharResult && !capitalResult {
             self.progress = 100
         }
         

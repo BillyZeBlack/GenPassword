@@ -10,6 +10,7 @@ import SwiftUI
 struct MeterView: View {
     let colors = [Color("Color"), Color("Color1")]
     @Binding var progress: CGFloat
+    @State var size = UIScreen.main.bounds.width
     
     var body: some View{
         ZStack{
@@ -17,11 +18,11 @@ struct MeterView: View {
                 Circle()
                     .trim(from: 0, to: 0.5)
                     .stroke(Color.black.opacity(0.1), lineWidth: 55)
-                    .frame(width: 280, height: 280)
+                    .frame(width: size/1.5, height: size/1.5)
                 Circle()
                     .trim(from: 0, to: self.setProgress())
                     .stroke(AngularGradient(gradient: .init(colors: self.colors), center: .center, angle: .init(degrees: 180)), lineWidth: 55)
-                    .frame(width: 280, height: 280)
+                    .frame(width: size/1.5, height: size/1.5)
             }
             .rotationEffect(.init(degrees: 180))
             .animation(Animation.linear(duration: 1.5))
