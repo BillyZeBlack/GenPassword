@@ -16,10 +16,8 @@ struct ContentView: View {
     @State private var numbersChecked = false
     @State private var specialCharsChecked = false
     @State private var lettersChecked = false
-    @State var passwordStrenghtLevel = "niveau"
     @State var progress: CGFloat = 0
     @State var toggleNotSelected = false
-    @State var canShowGraphique = false
     
     var body: some View {
         ZStack {
@@ -59,12 +57,9 @@ struct ContentView: View {
                                     Button {
                                         if !capsChecked && !lettersChecked && !numbersChecked && !specialCharsChecked {
                                             toggleNotSelected = true
-                                            canShowGraphique = false
                                             service.progress = 0
-                                            service.resetPassword()
                                         } else {
                                             toggleNotSelected = false
-                                            canShowGraphique = true
                                             withAnimation(.linear(duration: 1.5)) {
                                                 svr.scrollTo(0, anchor: .bottom)
                                             }

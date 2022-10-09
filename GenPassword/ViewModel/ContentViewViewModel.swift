@@ -45,10 +45,11 @@ class ContentViewViewModel: ObservableObject {
             testPassword(password: passwordGenerated, hasCaps: hasCaps, hasLetter: hasLetters, hasSpecialChar: hasSpecialChar, hasNumber: hasNumbers)
         } else {
             self.progress = 0
+            self.data = nil
         }
     }
     
-    func testPassword(password: String, hasCaps: Bool, hasLetter: Bool, hasSpecialChar: Bool, hasNumber: Bool)
+    private func testPassword(password: String, hasCaps: Bool, hasLetter: Bool, hasSpecialChar: Bool, hasNumber: Bool)
     {
         var condition = false
         
@@ -150,7 +151,7 @@ class ContentViewViewModel: ObservableObject {
         }
     }
     
-    func checkStrenghtPassword(password: String, capitalResult: Bool, lowercaseResult: Bool, specialCharResult: Bool, numberResult: Bool)
+    private func checkStrenghtPassword(password: String, capitalResult: Bool, lowercaseResult: Bool, specialCharResult: Bool, numberResult: Bool)
     {
         // MARK: Only numbers
         if numberResult &&  (!capitalResult && !lowercaseResult && !specialCharResult) {
@@ -382,10 +383,5 @@ class ContentViewViewModel: ObservableObject {
         }
         
         self.data = password
-    }
-    
-    func resetPassword()
-    {
-        self.data = "My GenP@ssw0rd"
     }
 }
