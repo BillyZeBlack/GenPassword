@@ -11,13 +11,23 @@ struct LaunchPage: View {
     @State var timerFinish = false
     
     var body: some View {
-        VStack{
+        VStack(spacing: 25) {
             if timerFinish {
                 ContentView()
             } else {
-                Text("fsdfsdf")
+                VStack {
+                    Spacer()
+                    TextShimmer(text: "GenP@sswØrd")
+                        .preferredColorScheme(.dark)
+                    Spacer()
+                    Image("slice of digital - NB - fond noir")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: UIScreen.main.bounds.size.width, height: 100)
+                }
             }
-        }.onAppear{
+        }
+        .onAppear{
             DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
             timerFinish = true
             })
@@ -25,7 +35,7 @@ struct LaunchPage: View {
     }
 }
 
-struct HomePage_Previews: PreviewProvider {
+struct launchPage_Previews: PreviewProvider {
     static var previews: some View {
         LaunchPage()
     }
