@@ -7,21 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F31C80828EDBDCB00138789 /* LaunchPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F31C80728EDBDCB00138789 /* LaunchPage.swift */; };
 		9F3E0D4628D59AB900DF8083 /* GenPasswordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3E0D4528D59AB900DF8083 /* GenPasswordApp.swift */; };
 		9F3E0D4828D59AB900DF8083 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3E0D4728D59AB900DF8083 /* ContentView.swift */; };
 		9F3E0D4A28D59AC900DF8083 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3E0D4928D59AC900DF8083 /* Assets.xcassets */; };
 		9F3E0D4D28D59AC900DF8083 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3E0D4C28D59AC900DF8083 /* Preview Assets.xcassets */; };
 		9F3E0D5F28D5AAE100DF8083 /* ContentViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3E0D5E28D5AAE100DF8083 /* ContentViewViewModel.swift */; };
+		9F4AEA4928F2B42A007EC15B /* TogglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4AEA4828F2B42A007EC15B /* TogglesView.swift */; };
 		9FEEE86828D9F2390034A76A /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEEE86728D9F2390034A76A /* MeterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F31C80728EDBDCB00138789 /* LaunchPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPage.swift; sourceTree = "<group>"; };
 		9F3E0D4228D59AB800DF8083 /* GenPassword.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenPassword.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F3E0D4528D59AB900DF8083 /* GenPasswordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenPasswordApp.swift; sourceTree = "<group>"; };
 		9F3E0D4728D59AB900DF8083 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9F3E0D4928D59AC900DF8083 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F3E0D4C28D59AC900DF8083 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9F3E0D5E28D5AAE100DF8083 /* ContentViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewViewModel.swift; sourceTree = "<group>"; };
+		9F4AEA4828F2B42A007EC15B /* TogglesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TogglesView.swift; sourceTree = "<group>"; };
 		9FEEE86728D9F2390034A76A /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +90,8 @@
 			children = (
 				9F3E0D4728D59AB900DF8083 /* ContentView.swift */,
 				9FEEE86728D9F2390034A76A /* MeterView.swift */,
+				9F31C80728EDBDCB00138789 /* LaunchPage.swift */,
+				9F4AEA4828F2B42A007EC15B /* TogglesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -172,9 +178,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F31C80828EDBDCB00138789 /* LaunchPage.swift in Sources */,
 				9F3E0D4828D59AB900DF8083 /* ContentView.swift in Sources */,
 				9FEEE86828D9F2390034A76A /* MeterView.swift in Sources */,
 				9F3E0D4628D59AB900DF8083 /* GenPasswordApp.swift in Sources */,
+				9F4AEA4928F2B42A007EC15B /* TogglesView.swift in Sources */,
 				9F3E0D5F28D5AAE100DF8083 /* ContentViewViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

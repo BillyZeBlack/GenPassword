@@ -9,7 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ContentView: View {
-    @StateObject var service: ContentViewViewModel
+    @StateObject var service =  ContentViewViewModel()
     @State var lenght = 8.0
     @State var passwordCopied = false
     @State private var capsChecked = false
@@ -22,9 +22,9 @@ struct ContentView: View {
     @State var canShowGraphique = false
     
     var body: some View {
-//        ZStack {
+        ZStack {
             VStack {
-                Text("GenP@ssw0rd")
+                Text("GenP@sswØrd")
                     .font(.title)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -43,38 +43,10 @@ struct ContentView: View {
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .foregroundColor(.white)
                                     
-                                    Toggle(isOn: $capsChecked) {
-                                        Text("Majuscules")
-                                            .font(.system(.title3, design: .rounded))
-                                            .foregroundColor(.white)
-                                    }
-                                    .padding()
-                                    .overlay(RoundedRectangle(cornerRadius: 15)
-                                                .stroke(Color.gray, lineWidth: 1))
-                                    
-                                    Toggle(isOn: $lettersChecked) {
-                                        Text("Minuscules")
-                                            .font(.system(.title3, design: .rounded))
-                                            .foregroundColor(.white)
-                                    }                    .padding()
-                                        .overlay(RoundedRectangle(cornerRadius: 15)
-                                                    .stroke(Color.gray, lineWidth: 1))
-                                    Toggle(isOn: $numbersChecked) {
-                                        Text("Nombres")
-                                            .font(.system(.title3, design: .rounded))
-                                            .foregroundColor(.white)
-                                    }                    .padding()
-                                        .overlay(RoundedRectangle(cornerRadius: 15)
-                                                    .stroke(Color.gray, lineWidth: 1))
-                                    Toggle(isOn: $specialCharsChecked) {
-                                        Text("Caractères spéciaux")
-                                            .font(.system(.title3, design: .rounded))
-                                            .foregroundColor(.white)
-                                    }
-                                    .padding()
-                                    .overlay(RoundedRectangle(cornerRadius: 15)
-                                                .stroke(Color.gray, lineWidth: 1))
-                                    
+                                    TogglesView(capsChecked: $capsChecked,
+                                                  lettersChecked: $lettersChecked,
+                                                  numbersChecked: $numbersChecked,
+                                                  specialCharsChecked: $specialCharsChecked)
                                     HStack {
                                         Text("\(Int(lenght))")
                                             .foregroundColor(.white)
@@ -84,69 +56,77 @@ struct ContentView: View {
                                         Text("64")
                                             .foregroundColor(.white)
                                     }
-                                    
-                                    HStack {
-                                        Spacer()
-                                        if nil == service.data {
-                                            Text("My GenP@ssw0rd")
-                                                .foregroundColor(.white)
-                                                .padding()
+                                    Button {
+                                        if !capsChecked && !lettersChecked && !numbersChecked && !specialCharsChecked {
+                                            toggleNotSelected = true
+                                            canShowGraphique = false
+                                            service.progress = 0
+                                            service.resetPassword()
                                         } else {
-                                            Text(service.data)
-                                                .padding()
-                                                .foregroundColor(.white)
+                                            toggleNotSelected = false
+                                            canShowGraphique = true
+                                            withAnimation(.linear(duration: 1.5)) {
+                                                svr.scrollTo(0, anchor: .bottom)
+                                            }
+                                            service.genPassword(len: Int(lenght), hasSpecialChar: specialCharsChecked, hasNumbers: numbersChecked, hasCaps: capsChecked, hasLetters: lettersChecked)
+                                            passwordCopied = false
                                         }
-                                        Spacer()
-                                        if !passwordCopied {
-                                            Image(systemName: "doc.on.doc")
-                                                .foregroundColor(.white)
-                                                .padding()
-                                                .onTapGesture {
-                                                    UIPasteboard.general.setValue(self.service.data!, forPasteboardType: UTType.plainText.identifier)
-                                                    passwordCopied = true
-                                                }
-                                        }else {
-                                            Image(systemName: "doc.on.doc.fill")
-                                                .foregroundColor(.white)
-                                                .padding()
-                                        }
+                                    } label: {
+                                        Text("Créer un  mot de passe").font(.system(.title3, design: .rounded))
+                                            .foregroundColor(.white)
+                                            .frame(maxWidth: .infinity, minHeight: 55)
+                                            .overlay(RoundedRectangle(cornerRadius: 15)
+                                                        .stroke(Color.white, lineWidth: 3))
                                     }
-                                    .frame(maxWidth: .infinity)
-                                    .overlay(RoundedRectangle(cornerRadius: 15)
-                                                .stroke(Color.gray, lineWidth: 1))
+                                    .clipped()
+                                    .padding()
+                                    .alert(isPresented: $toggleNotSelected) {
+                                        Alert(
+                                            title: Text("Information")
+                                                .foregroundColor(.gray),
+                                            message: Text("Veuillez sélectionner un élément")
+                                                .foregroundColor(.white),
+                                            dismissButton: .default(Text("OK")
+                                                                        .foregroundColor(.white))
+                                        )
+                                    }
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+                                            if !capsChecked && !lettersChecked && !numbersChecked && !specialCharsChecked || nil == service.data {
+                                                Text("My GenP@ssw0rd")
+                                                    .foregroundColor(.white)
+//                                                    .padding()
+                                                
+                                            } else {
+                                                Text(service.data)
+//                                                    .padding()
+                                                    .foregroundColor(.white)
+                                            }
+                                            Spacer()
+                                            if !passwordCopied {
+                                                Image(systemName: "doc.on.doc")
+                                                    .foregroundColor(.white)
+//                                                    .padding()
+                                                    .onTapGesture {
+                                                        UIPasteboard.general.setValue(self.service.data!, forPasteboardType: UTType.plainText.identifier)
+                                                        passwordCopied = true
+                                                    }
+                                            }else {
+                                                Image(systemName: "doc.on.doc.fill")
+                                                    .foregroundColor(.white)
+//                                                    .padding()
+                                            }
+                                        }
+//                                        .frame(maxWidth: .infinity)
+//                                        .overlay(RoundedRectangle(cornerRadius: 15)
+//                                                .stroke(Color.gray, lineWidth: 1))
+                                        Rectangle()
+                                            .frame(width: .infinity, height: 1)
+                                            .foregroundColor(.white)
+                                    }
                                 }
                                 .padding(.horizontal, 8)
-                                
-                                Button {
-                                    if !capsChecked && !lettersChecked && !numbersChecked && !specialCharsChecked {
-                                        toggleNotSelected = true
-                                        canShowGraphique = false
-                                        service.progress = 0
-                                    } else {
-                                        toggleNotSelected = false
-                                        canShowGraphique = true
-                                        service.genPassword(len: Int(lenght), hasSpecialChar: specialCharsChecked, hasNumbers: numbersChecked, hasCaps: capsChecked, hasLetters: lettersChecked)
-                                        passwordCopied = false
-                                    }
-                                } label: {
-                                    Text("Créer un  mot de passe").font(.system(.title3, design: .rounded))
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity, minHeight: 55)
-                                        .overlay(RoundedRectangle(cornerRadius: 15)
-                                                    .stroke(Color.white, lineWidth: 3))
-                                }
-                                .clipped()
-                                .padding(.horizontal, 8)
-                                .alert(isPresented: $toggleNotSelected) {
-                                    Alert(
-                                        title: Text("Information")
-                                            .foregroundColor(.gray),
-                                        message: Text("Veuillez sélectionner un élément")
-                                            .foregroundColor(.white),
-                                        dismissButton: .default(Text("OK")
-                                                                    .foregroundColor(.white))
-                                    )
-                                }
                             }
                             VStack {
                                 Text("Sécurité du mot de passe")
@@ -154,21 +134,18 @@ struct ContentView: View {
                                     .padding()
                                 MeterView(progress: $service.progress)
                                     .padding()
-                                Spacer()
-                                Text("")
-                                Text("")
-                                Spacer()
-                            }.padding(.horizontal, 8)
-                            Spacer()
-                        }
-                    }
+                            }.id(0)
+                            .padding(.horizontal, 8)
+                            .padding(.bottom)
+                        }.padding(.bottom)
+                    }.padding(.bottom)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 8)
             .background(LinearGradient(gradient: Gradient(colors: [Color("ColorBackground1"), Color("ColorBackground2")]), startPoint: .top, endPoint: .bottom))
-//            Spacer()
-//        }.background(LinearGradient(gradient: Gradient(colors: [Color("ColorBackground1"), Color("ColorBackground2")]), startPoint: .top, endPoint: .bottom))
+            Spacer()
+        }.background(LinearGradient(gradient: Gradient(colors: [Color("ColorBackground1"), Color("ColorBackground2")]), startPoint: .top, endPoint: .bottom))
     }
 }
 
