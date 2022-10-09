@@ -15,6 +15,7 @@
 		9F3E0D5F28D5AAE100DF8083 /* ContentViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3E0D5E28D5AAE100DF8083 /* ContentViewViewModel.swift */; };
 		9F4AEA4928F2B42A007EC15B /* TogglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4AEA4828F2B42A007EC15B /* TogglesView.swift */; };
 		9F4AEA4B28F2CBBE007EC15B /* TextShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4AEA4A28F2CBBE007EC15B /* TextShimmer.swift */; };
+		9F4AEA4D28F2D620007EC15B /* StylingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4AEA4C28F2D620007EC15B /* StylingButtonView.swift */; };
 		9FEEE86828D9F2390034A76A /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEEE86728D9F2390034A76A /* MeterView.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		9F3E0D5E28D5AAE100DF8083 /* ContentViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewViewModel.swift; sourceTree = "<group>"; };
 		9F4AEA4828F2B42A007EC15B /* TogglesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TogglesView.swift; sourceTree = "<group>"; };
 		9F4AEA4A28F2CBBE007EC15B /* TextShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextShimmer.swift; sourceTree = "<group>"; };
+		9F4AEA4C28F2D620007EC15B /* StylingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylingButtonView.swift; sourceTree = "<group>"; };
 		9FEEE86728D9F2390034A76A /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 				9F31C80728EDBDCB00138789 /* LaunchPage.swift */,
 				9F4AEA4828F2B42A007EC15B /* TogglesView.swift */,
 				9F4AEA4A28F2CBBE007EC15B /* TextShimmer.swift */,
+				9F4AEA4C28F2D620007EC15B /* StylingButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 9F3E0D3928D59AB800DF8083;
 			packageReferences = (
@@ -184,6 +188,7 @@
 				9F31C80828EDBDCB00138789 /* LaunchPage.swift in Sources */,
 				9F3E0D4828D59AB900DF8083 /* ContentView.swift in Sources */,
 				9FEEE86828D9F2390034A76A /* MeterView.swift in Sources */,
+				9F4AEA4D28F2D620007EC15B /* StylingButtonView.swift in Sources */,
 				9F3E0D4628D59AB900DF8083 /* GenPasswordApp.swift in Sources */,
 				9F4AEA4928F2B42A007EC15B /* TogglesView.swift in Sources */,
 				9F3E0D5F28D5AAE100DF8083 /* ContentViewViewModel.swift in Sources */,
@@ -198,6 +203,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -259,6 +265,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

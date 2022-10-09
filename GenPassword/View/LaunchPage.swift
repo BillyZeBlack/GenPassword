@@ -13,7 +13,10 @@ struct LaunchPage: View {
     var body: some View {
         VStack(spacing: 25) {
             if timerFinish {
-                ContentView()
+                withAnimation {
+                    ContentView()
+                }.transition(.slide)
+                
             } else {
                 VStack {
                     Spacer()

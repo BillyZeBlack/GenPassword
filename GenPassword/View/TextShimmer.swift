@@ -21,7 +21,7 @@ struct TextShimmer: View {
                 ForEach(0..<text.count, id: \.self) { index in
                     Text(String(text[text.index(text.startIndex, offsetBy: index)]))
                         .font(.system(size: 45, weight: .bold))
-                        .foregroundColor(.white)//randomColor()
+                        .foregroundColor(.white)
                 }
             }
             .mask(
@@ -39,13 +39,6 @@ struct TextShimmer: View {
                 }
             }
         }
-    }
-    
-    func randomColor()->Color
-    {
-        let color = UIColor(red: 1, green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1)
-        
-        return Color(color)
     }
 }
 

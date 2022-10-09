@@ -44,7 +44,7 @@ struct ContentView: View {
                                     TogglesView(capsChecked: $capsChecked,
                                                   lettersChecked: $lettersChecked,
                                                   numbersChecked: $numbersChecked,
-                                                  specialCharsChecked: $specialCharsChecked)
+                                                specialCharsChecked: $specialCharsChecked)
                                     HStack {
                                         Text("\(Int(lenght))")
                                             .foregroundColor(.white)
@@ -54,7 +54,7 @@ struct ContentView: View {
                                         Text("64")
                                             .foregroundColor(.white)
                                     }
-                                    Button {
+                                    Button("**Céer un mot de passe**"){
                                         if !capsChecked && !lettersChecked && !numbersChecked && !specialCharsChecked {
                                             toggleNotSelected = true
                                             service.progress = 0
@@ -66,20 +66,13 @@ struct ContentView: View {
                                             service.genPassword(len: Int(lenght), hasSpecialChar: specialCharsChecked, hasNumbers: numbersChecked, hasCaps: capsChecked, hasLetters: lettersChecked)
                                             passwordCopied = false
                                         }
-                                    } label: {
-                                        Text("Créer un  mot de passe").font(.system(.title3, design: .rounded))
-                                            .foregroundColor(.white)
-                                            .frame(maxWidth: .infinity, minHeight: 55)
-                                            .overlay(RoundedRectangle(cornerRadius: 15)
-                                                        .stroke(Color.white, lineWidth: 3))
                                     }
-                                    .clipped()
-                                    .padding()
+                                    .buttonStyle(StylingButtonView())
                                     .alert(isPresented: $toggleNotSelected) {
                                         Alert(
-                                            title: Text("Information")
+                                            title: Text("**Information**")
                                                 .foregroundColor(.gray),
-                                            message: Text("Veuillez sélectionner un élément")
+                                            message: Text("Veuillez sélectionner, au moins, un paramètre.")
                                                 .foregroundColor(.white),
                                             dismissButton: .default(Text("OK")
                                                                         .foregroundColor(.white))
@@ -91,18 +84,17 @@ struct ContentView: View {
                                             if !capsChecked && !lettersChecked && !numbersChecked && !specialCharsChecked || nil == service.data {
                                                 Text("My GenP@ssw0rd")
                                                     .foregroundColor(.white)
-//                                                    .padding()
-                                                
+                                                    .font(.callout)
                                             } else {
-                                                Text(service.data)
+                                                Text("**\(service.data)**")
 //                                                    .padding()
                                                     .foregroundColor(.white)
+                                                    .font(.system(size: 25))
                                             }
                                             Spacer()
                                             if !passwordCopied {
                                                 Image(systemName: "doc.on.doc")
                                                     .foregroundColor(.white)
-//                                                    .padding()
                                                     .onTapGesture {
                                                         UIPasteboard.general.setValue(self.service.data!, forPasteboardType: UTType.plainText.identifier)
                                                         passwordCopied = true
@@ -110,18 +102,14 @@ struct ContentView: View {
                                             }else {
                                                 Image(systemName: "doc.on.doc.fill")
                                                     .foregroundColor(.white)
-//                                                    .padding()
                                             }
                                         }
-//                                        .frame(maxWidth: .infinity)
-//                                        .overlay(RoundedRectangle(cornerRadius: 15)
-//                                                .stroke(Color.gray, lineWidth: 1))
                                         Rectangle()
                                             .frame(width: .infinity, height: 1)
                                             .foregroundColor(.white)
-                                    }
+                                    }.padding()
                                 }
-                                .padding(.horizontal, 8)
+                                .padding()
                             }
                             VStack {
                                 Text("Sécurité du mot de passe")
@@ -147,6 +135,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(service: ContentViewViewModel())
+            .previewDevice("iPod touch (7th generation)")
         
     }
 }
