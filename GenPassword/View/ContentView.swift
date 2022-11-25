@@ -18,6 +18,7 @@ struct ContentView: View {
     @State private var lettersChecked = false
     @State var progress: CGFloat = 0
     @State var toggleNotSelected = false
+    @State var isPasswordHidden = true
     
     var body: some View {
         ZStack {
@@ -86,12 +87,27 @@ struct ContentView: View {
                                                     .foregroundColor(.white)
                                                     .font(.callout)
                                             } else {
-                                                Text("**\(service.data)**")
-//                                                    .padding()
-                                                    .foregroundColor(.white)
-                                                    .font(.system(size: 25))
+                                                if isPasswordHidden {
+                                                    SecureField("test",text: $service.data)
+                                                        .multilineTextAlignment(.center)
+                                                } else {
+                                                    Text("**\(service.data)**")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 25))
+                                                }
                                             }
                                             Spacer()
+                                            if isPasswordHidden {
+                                                Image(systemName: "eye").foregroundColor(.white)
+                                                    .onTapGesture {
+                                                    isPasswordHidden.toggle()
+                                                }
+                                            } else {
+                                                Image(systemName: "eye.slash").foregroundColor(.white)
+                                                    .onTapGesture {
+                                                        isPasswordHidden.toggle()
+                                                    }
+                                            }
                                             if !passwordCopied {
                                                 Image(systemName: "doc.on.doc")
                                                     .foregroundColor(.white)
